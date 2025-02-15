@@ -1,4 +1,4 @@
-package com.example.login_auth_api.infra.security;
+package com.example.loginauthapi.infra.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

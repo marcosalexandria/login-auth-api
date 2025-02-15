@@ -1,6 +1,7 @@
-package com.example.login_auth_api.infra.security;
-import com.example.login_auth_api.domain.entity.Usuario;
-import com.example.login_auth_api.repositories.UsuarioRepository;
+package com.example.loginauthapi.infra.security;
+
+import com.example.loginauthapi.domain.user.User;
+import com.example.loginauthapi.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,13 +12,11 @@ import java.util.ArrayList;
 
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
-
     @Autowired
-    private UsuarioRepository repository;
-
+    private UserRepository repository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario = this.repository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Usuario Não encontrado."));
-        return new org.springframework.security.core.userdetails.User(usuario.getEmail(), usuario.getSenha(), new ArrayList<>());
+        User user = this.repository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
     }
 }

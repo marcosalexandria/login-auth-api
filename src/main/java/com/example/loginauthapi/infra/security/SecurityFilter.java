@@ -1,7 +1,7 @@
-package com.example.login_auth_api.infra.security;
+package com.example.loginauthapi.infra.security;
 
-import com.example.login_auth_api.domain.entity.Usuario;
-import com.example.login_auth_api.repositories.UsuarioRepository;
+import com.example.loginauthapi.domain.user.User;
+import com.example.loginauthapi.repositories.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,17 +21,17 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Autowired
     TokenService tokenService;
     @Autowired
-    UsuarioRepository repository;
+    UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         var token = this.recoverToken(request);
-        var login = tokenService.validaToken(token);
+        var login = tokenService.validateToken(token);
 
         if(login != null){
-            Usuario usuario = repository.findByEmail(login).orElseThrow(() -> new RuntimeException("User Not Found"));
+            User user = userRepository.findByEmail(login).orElseThrow(() -> new RuntimeException("User Not Found"));
             var authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
-            var authentication = new UsernamePasswordAuthenticationToken(usuario, null, authorities);
+            var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         filterChain.doFilter(request, response);

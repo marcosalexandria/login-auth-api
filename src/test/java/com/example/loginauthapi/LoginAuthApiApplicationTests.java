@@ -1,4 +1,4 @@
-package com.example.login_auth_api;
+package com.example.loginauthapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

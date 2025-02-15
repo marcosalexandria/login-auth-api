@@ -1,4 +1,4 @@
-package com.example.login_auth_api.domain.entity;
+package com.example.loginauthapi.domain.user;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,18 +7,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "usuario")
+@Table(name = "users")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario {
-
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    private String nome;
+    private String name;
     private String email;
-    private String senha;
-
+    private String password;
 }
